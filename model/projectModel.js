@@ -9,10 +9,12 @@ const projectSchema = new mongoose.Schema({
         type:String,
         required:[true]
     },
-    skills:{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Skill' 
-    },
+    skills:[
+        {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Skill' 
+        },
+    ],
     about:{
         type:String,
         required:[true]
