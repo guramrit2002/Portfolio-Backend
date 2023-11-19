@@ -11,7 +11,7 @@ app.use(cors());
 
 // Additional CORS configuration (optional)
 const corsOptions = {
-  origin: 'http://127.0.0.1:5500/',
+  origin: 'https://guramrit2002.github.io/Portfolio/',
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
