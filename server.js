@@ -1,15 +1,35 @@
-const express = require('express')
-const errorHandeler = require('./middleware/middleware')
-const connectdb = require('./config/dbconnection')
-const PORT = process.env.PORT||4000
+const express = require('express');
+const errorHandeler = require('./middleware/middleware');
+const connectdb = require('./config/dbconnection');
+const cors = require('cors');
+const PORT = process.env.PORT || 4000;
 
-const app = express()
-app.use(express.json())
-app.use('/api',require('./routes/route'))
-app.use(errorHandeler)
+const app = express();
 
-connectdb() 
+// Enable CORS for all routes
+app.use(cors());
 
-app.listen(PORT,()=>{
-    console.log(`listening to the port ${PORT}`)
-})
+// Additional CORS configuration (optional)
+const corsOptions = {
+  origin: 'http://127.0.0.1:5500/',
+  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
+
+// Parse JSON bodies
+app.use(express.json());
+
+// Define your routes
+app.use('/api', require('./routes/route'));
+
+// Error handler middleware
+app.use(errorHandeler);
+
+// Connect to the database
+connectdb();
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Listening to the port ${PORT}`);
+});
