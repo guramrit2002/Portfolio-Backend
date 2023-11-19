@@ -7,13 +7,12 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 // Enable CORS for all routes
-app.use(cors());
-
-// Additional CORS configuration (optional)
-const corsOptions = {
-  origin: 'https://guramrit2002.github.io/Portfolio/',
-  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
+  
 
 app.use(cors(corsOptions));
 
