@@ -58,4 +58,15 @@ const postNewSkill = asyncHandeler(async (req,res)=>{
 })
 
 
-module.exports = {getAllProject, postNewProject,getAllSkill, postNewSkill}
+const getIdSkill = asyncHandeler(async (req, res) => {
+    const skill =await Skill.findById(req.params.id)
+    if (!skill){
+        res.status(404)
+        throw new Error("Skill Not Found")
+    }
+    res.status(200).json({
+        skill
+    });
+});
+
+module.exports = {getAllProject, postNewProject,getAllSkill, postNewSkill,getIdSkill}

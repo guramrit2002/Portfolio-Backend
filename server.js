@@ -14,7 +14,6 @@ app.use((req, res, next) => {
 });
   
 
-app.use(cors(corsOptions));
 
 // Parse JSON bodies
 app.use(express.json());

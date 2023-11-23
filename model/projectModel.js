@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 const projectSchema = new mongoose.Schema({
     name: {
         type: String,
-        required:[true]
+        required:true
     },
     contribute:{
         type:String,
-        required:[true]
+        required:true
     },
     skills:[
         {
@@ -17,15 +17,15 @@ const projectSchema = new mongoose.Schema({
     ],
     about:{
         type:String,
-        required:[true]
+        required:true
     },
     github:{
         type:String,
-        required:[true]
+        required:true
     },
     demo:{
         type:String,
-        required:[true]
+        required:true
     }
 })
 
