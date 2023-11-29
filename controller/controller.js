@@ -4,10 +4,36 @@ const Skill = require('../model/skillModel')
 
 // Project controllers
 
-const getAllProject = asyncHandeler(async (req,res)=>{
-    const project = await Project.find()
-    res.status(200).json(project)
-})
+const getAllProject = asyncHandeler(async (req, res) => {
+    try {
+      const projects = await Project.find();
+  
+      for (const project of projects) {
+        console.log(project.skills);
+  
+        const skills = project.skills;
+  
+        for (const skillId of skills) {
+          const skillObj = await Skill.findById(skillId);
+          console.log(skillObj);
+        }
+      }
+      const projectsWithSkills = await Promise.all(
+        projects.map(async (project) => {
+          const skills = await Skill.find({ _id: { $in: project.skills } });
+          return {
+            project: project,
+            skills: skills,
+          };
+        })
+      );
+      res.status(200).json(projectsWithSkills);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
 
 const postNewProject = asyncHandeler(async (req, res) => {
     const { name, contribute, skills, about, github, demo } = req.body;
