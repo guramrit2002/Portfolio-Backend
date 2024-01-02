@@ -10,7 +10,7 @@ const {getAllProject,
 
 // Project routes
 
-route.get('/',getAllProject)
+route.get('/',getAllProject) //Give better route name
 route.post('/new/project',postNewProject)
 
 
@@ -19,5 +19,6 @@ route.get('/skill',getAllSkill)
 route.post('/new/skill',postNewSkill)
 route.get('/:id',getIdSkill)
 
+// contact routes
 
 module.exports = route

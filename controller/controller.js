@@ -6,27 +6,19 @@ const Skill = require('../model/skillModel')
 
 const getAllProject = asyncHandeler(async (req, res) => {
     try {
+      // time calculate here
       const projects = await Project.find();
-  
-      for (const project of projects) {
-        console.log(project.skills);
-  
-        const skills = project.skills;
-  
-        for (const skillId of skills) {
-          const skillObj = await Skill.findById(skillId);
-          console.log(skillObj);
-        }
-      }
-      const projectsWithSkills = await Promise.all(
-        projects.map(async (project) => {
-          const skills = await Skill.find({ _id: { $in: project.skills } });
-          return {
-            project: project,
-            skills: skills,
-          };
+      const skillMaster = await Skill.find();
+      let projectsWithSkills = [];
+
+      for (let project of projects) {
+        projectSkillIds = project.skills;
+        let desiredSkills = skillMaster.find((sm) => { projectSkillIds.includes(sm._id)});
+        projectsWithSkills.push({
+          project: project,
+          skills: desiredSkills
         })
-      );
+      }
       res.status(200).json(projectsWithSkills);
     } catch (error) {
       console.error(error);
