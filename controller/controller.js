@@ -9,11 +9,13 @@ const getAllProject = asyncHandeler(async (req, res) => {
       // time calculate here
       const projects = await Project.find();
       const skillMaster = await Skill.find();
+      console.log(skillMaster)
       let projectsWithSkills = [];
 
       for (let project of projects) {
         projectSkillIds = project.skills;
-        let desiredSkills = skillMaster.find((sm) => { projectSkillIds.includes(sm._id)});
+        let desiredSkills = skillMaster.filter((sm) => { return projectSkillIds.includes(sm._id.toString())});
+        console.log(desiredSkills)
         projectsWithSkills.push({
           project: project,
           skills: desiredSkills
